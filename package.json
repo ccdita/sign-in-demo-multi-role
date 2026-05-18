@@ -1,0 +1,23 @@
+{
+  "name": "sign-in-demo-multi-role",
+  "version": "1.0.0",
+  "description": "Playwright test suite for authenticating with multiple roles",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccdita/sign-in-demo-multi-role.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ccdita/sign-in-demo-multi-role/issues"
+  },
+  "homepage": "https://github.com/ccdita/sign-in-demo-multi-role#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.0"
+  }
+}
