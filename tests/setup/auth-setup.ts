@@ -25,7 +25,23 @@ setup('Authenticate as a locked out user', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
     await doLogin(page, loginPage, username, password);
-    await checkLockedOut(page, loginPage);
+    await checkLockedOut(loginPage);
+});
+
+const problemUserFile = '.auth/problem_user.json';
+
+/**
+ * Authenticates as a problem user and stores the authentication state in the specified problemUserFile
+ */
+setup('Authenticate as a problem user', async ({ page }) => {
+    const username = process.env.PROBLEM_USERNAME!;
+    const password = process.env.DEMO_PASSWORD!;
+    const loginPage = new LoginPage(page);
+
+    await doLogin(page, loginPage, username, password);
+    await checkLoggedIn(page, loginPage);
+
+    await page.context().storageState({ path: problemUserFile }); // Store the authentication state
 });
 
 /**
