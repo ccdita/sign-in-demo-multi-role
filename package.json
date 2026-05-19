@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Playwright test suite for authenticating with multiple roles",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test-setup-c": "npx playwright test tests/setup/ --project=chromium",
+    "test-auth-standard-user": "npx playwright test specs/profile-stored-auth-standard-user.spec.ts --project=chromium",
+    "test-auth-problem-user": "npx playwright test specs/profile-stored-auth-problem-user.spec.ts --project=chromium"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ccdita/sign-in-demo-multi-role.git"
