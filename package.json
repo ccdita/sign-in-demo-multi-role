@@ -6,7 +6,8 @@
   "scripts": {
     "test-setup-c": "npx playwright test tests/setup/ --project=chromium",
     "test-auth-standard-user": "npx playwright test specs/profile-stored-auth-standard-user.spec.ts --project=chromium",
-    "test-auth-problem-user": "npx playwright test specs/profile-stored-auth-problem-user.spec.ts --project=chromium"
+    "test-auth-problem-user": "npx playwright test specs/profile-stored-auth-problem-user.spec.ts --project=chromium",
+    "test-multi-roles": "npx playwright test specs/profile-stored-auth-multi-role.spec.ts --project=chromium"
   },
   "repository": {
     "type": "git",
