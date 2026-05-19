@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import LoginPage from '../pages/login-page';
+import InventoryPage from '../pages/inventory-page';
 
-let loginPage: LoginPage;
+let inventoryPage: InventoryPage;
 
 /**
  * Not necessary:
@@ -34,14 +34,16 @@ test.describe('Swag Labs - Profiles', () => {
         const standardUserContext = await browser.newContext({ storageState: '.auth/standard_user.json' });
         const standardUserPage = await standardUserContext.newPage(); // Create a new tab/page within the browser
         await standardUserPage.goto('/inventory.html');
-        loginPage = new LoginPage(standardUserPage); // Pass authenticated page into POM
-        await loginPage.checkLoggedIn();
+        inventoryPage = new InventoryPage(standardUserPage); // Pass authenticated page into POM
+        await inventoryPage.clickFirstItemLink();
+        await inventoryPage.checkFirstItemPage();
 
         // ----- PROBLEM USER -----
         const problemUserContext = await browser.newContext({ storageState: '.auth/problem_user.json' });
         const problemUserPage = await problemUserContext.newPage();
         await problemUserPage.goto('/inventory.html');
-        loginPage = new LoginPage(problemUserPage);
-        await loginPage.checkLoggedIn();
+        inventoryPage = new InventoryPage(problemUserPage);
+        await inventoryPage.clickFirstItemLink();
+        await inventoryPage.checkWrongFirstItemPage();
     });
 });
