@@ -24,8 +24,8 @@ setup('Authenticate as standard user', async ({ page }) => {
 async function doLogin(page: Page, username: string, password: string) {
     const loginPage = new LoginPage(page);
 
-    await page.goto('');
+    await page.goto('/');
     await loginPage.doLogin(username, password);
-    await page.waitForURL('');
+    await page.waitForURL(/.*\/inventory.html/);
     await loginPage.checkLoggedIn();
 }
