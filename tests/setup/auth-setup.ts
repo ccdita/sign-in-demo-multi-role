@@ -45,6 +45,18 @@ setup('Authenticate as a problem user', async ({ page }) => {
 });
 
 /**
+ * Attempts to authenticate as a nonexistent user
+ */
+setup('Authenticate as a nonexistent user', async({ page }) => {
+    const username = process.env.NONEXISTENT_USERNAME!;
+    const password = process.env.DEMO_PASSWORD!;
+    const loginPage = new LoginPage(page);
+
+    await doLogin(page, loginPage, username, password);
+    await checkInvalidCredentials(loginPage);
+});
+
+/**
  * Logs into the application with the given credentials
  * 
  * @param page object for interacting with the login page
@@ -74,4 +86,13 @@ async function checkLoggedIn(page: Page, loginPage: LoginPage) {
  */
 async function checkLockedOut(loginPage: LoginPage) {
     await loginPage.checkLockedOut();
+}
+
+/**
+ * Checks that the user with invalid credentials is unable to log in
+ * 
+ * @param loginPage, page object for the login page
+ */
+async function checkInvalidCredentials(loginPage: LoginPage) {
+    await loginPage.checkInvalidCredentials();
 }

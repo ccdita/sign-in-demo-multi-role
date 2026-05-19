@@ -10,7 +10,9 @@ class LoginPage {
     readonly passwordField: Locator;
     readonly loginButton: Locator;
     readonly lockedOutErrorMsg: Locator;
+    readonly invalidUserErrorMsg: Locator;
     readonly lockedOutText = 'Epic sadface: Sorry, this user has been locked out.';
+    readonly invalidUserText = 'Epic sadface: Username and password do not match any user in this service';
 
     /**
      * Instantiates a LoginPage object
@@ -23,6 +25,7 @@ class LoginPage {
         this.passwordField = page.getByPlaceholder('Password');
         this.loginButton = page.getByRole('button', { name: 'Login' });
         this.lockedOutErrorMsg = this.page.getByText(this.lockedOutText);
+        this.invalidUserErrorMsg = this.page.getByText(this.invalidUserText);
     }
 
     /**
@@ -67,6 +70,13 @@ class LoginPage {
      */
     async checkLockedOut() {
         await expect(this.lockedOutErrorMsg).toBeVisible();
+    }
+
+    /**
+     * Checks that the user is unable to log in when they input invalid credentials
+     */
+    async checkInvalidCredentials() {
+        await expect(this.invalidUserErrorMsg).toBeVisible();
     }
 }
 
