@@ -59,6 +59,14 @@ class InventoryPage {
         await expect(this.firstItemPageTitle).toHaveText(this.firstItemLinkText);
         await expect(this.firstItemPageDesc).toHaveText(this.firstItemInventoryDesc);
     }
+
+    /**
+     * Checks that the first item does not match the first item listed in the inventory page
+     */
+    async checkWrongFirstItemPage() {
+        await expect(this.firstItemPageTitle).not.toHaveText(this.firstItemLinkText);
+        await expect(this.firstItemPageDesc).not.toHaveText(this.firstItemInventoryDesc);
+    }
 }
 
 export default InventoryPage;
