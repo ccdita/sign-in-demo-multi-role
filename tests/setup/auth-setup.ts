@@ -9,9 +9,23 @@ const standardUserFile = '.auth/standard_user.json';
 setup('Authenticate as standard user', async ({ page }) => {
     const username = process.env.STANDARD_USERNAME!;
     const password = process.env.DEMO_PASSWORD!;
-    await doLogin(page, username, password); // Log into the application with the standard user credentials
+    const loginPage = new LoginPage(page);
+    await doLogin(page, loginPage, username, password); // Log into the application with the standard user credentials
+    await checkLoggedIn(page, loginPage);
 
     await page.context().storageState({ path: standardUserFile }); // Store the authentication state
+});
+
+/**
+ * Attempts to authenticate as a locked out user
+ */
+setup('Authenticate as a locked out user', async ({ page }) => {
+    const username = process.env.LOCKED_OUT_USERNAME!;
+    const password = process.env.DEMO_PASSWORD!;
+    const loginPage = new LoginPage(page);
+
+    await doLogin(page, loginPage, username, password);
+    await checkLockedOut(page, loginPage);
 });
 
 /**
@@ -21,11 +35,27 @@ setup('Authenticate as standard user', async ({ page }) => {
  * @param username to login with
  * @param password to login with
  */
-async function doLogin(page: Page, username: string, password: string) {
-    const loginPage = new LoginPage(page);
-
+async function doLogin(page: Page, loginPage: LoginPage, username: string, password: string) {
     await page.goto('/');
     await loginPage.doLogin(username, password);
+}
+
+/**
+ * Checks that the login was successful
+ * 
+ * @param page object for interacting with the login page
+ * @param loginPage, page object for the login page
+ */
+async function checkLoggedIn(page: Page, loginPage: LoginPage) {
     await page.waitForURL(/.*\/inventory.html/);
     await loginPage.checkLoggedIn();
+}
+
+/**
+ * Checks that the user is locked out and unable to log in
+ * 
+ * @param loginPage, page object for the login page
+ */
+async function checkLockedOut(loginPage: LoginPage) {
+    await loginPage.checkLockedOut();
 }
